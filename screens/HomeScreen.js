@@ -9,17 +9,13 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { DrawerActions } from 'react-navigation'
 import { MonoText } from '../components/StyledText';
-import { FontAwesome } from '@expo/vector-icons';
-import Constants from 'expo-constants';
+import HeaderButton from '../components/HeaderButton';
 
 export default function HomeScreen(props) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <FontAwesome.Button style={{paddingTop: Constants.statusBarHeight, position: 'absolute', left: 20}} size={30} name="bars" backgroundColor="#ccc" color="black" onPress={() => { props.navigation.dispatch(DrawerActions.openDrawer()); }} />
-      </TouchableOpacity>
+      <HeaderButton navigation={props.navigation}/>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
@@ -117,6 +113,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative'
   },
   developmentModeText: {
     marginBottom: 20,
