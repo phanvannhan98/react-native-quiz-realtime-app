@@ -1,6 +1,6 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import { Platform, Text, View, Image } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator, DrawerItems } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -20,8 +20,8 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
+  drawerLabel: 'Trang Chủ',
+  drawerIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
@@ -43,8 +43,8 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
+  drawerLabel: 'Thi Chung',
+  drawerIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
   ),
 };
@@ -59,18 +59,27 @@ const SettingsStack = createStackNavigator(
 );
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
+  drawerLabel: 'Settings',
+  drawerIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
   ),
 };
 
 SettingsStack.path = '';
 
+const CustomDrawerContentComponent = props => (
+  <View>
+    <Image style={{width:100, height: 100, marginLeft: 10}} source={require('../assets/images/logo.jpg')}/>
+    <DrawerItems {...props} />
+  </View>
+);
+
 const tabNavigator = createDrawerNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
+},{
+  contentComponent: CustomDrawerContentComponent
 });
 
 tabNavigator.path = '';
