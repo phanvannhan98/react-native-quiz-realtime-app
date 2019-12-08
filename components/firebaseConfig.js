@@ -10,4 +10,6 @@ var firebaseConfig = {
     measurementId: "G-YPD3JRGWBS"
   };
   // Initialize Firebase
- export default firebaseApp = firebase.initializeApp(firebaseConfig);
+  
+ export const firebaseApp = firebase.initializeApp(firebaseConfig);
+
