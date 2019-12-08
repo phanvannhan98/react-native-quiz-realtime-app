@@ -1,16 +1,45 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, Text, FlatList, Image } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import { firebaseApp } from '../components/firebaseConfig.js';
+import { FlatList } from 'react-native-gesture-handler';
+
+const imagesRequire = [
+  {
+    key: 'images/level1.png',
+    value: require('../assets/images/level1.png')
+  },
+  {
+    key: 'images/level2.png',
+    value: require('../assets/images/level2.png')
+  },
+  {
+    key: 'images/logo.jpg',
+    value: require('../assets/images/logo.jpg')
+  }
+]
 
 export default class LinksScreen extends React.Component {
   constructor(props) {
     super(props);
     this.itemRef = firebaseApp.database().ref("questions");
     this.levelRef = firebaseApp.database().ref("subjectLevel");
+    this.testRef = firebaseApp.database().ref("test");
     this.state = {
       dataSource: []
     }
+  }
+
+  componentDidMount(){
+    this.addDB();
+    this.testDb();
+  }
+
+  testDb(){
+    this.testRef.on('child_added', (data) => {
+      console.log(data);
+      Alert.alert('run')
+    })
   }
 
   setDB = () => {
@@ -168,6 +197,8 @@ export default class LinksScreen extends React.Component {
   addDB = () => {
     let items = [];
     this.levelRef.on('child_added', (dataSnapshot) => {
+      console.log(dataSnapshot);
+      
       items.push({
         name: dataSnapshot.val(),
         key: dataSnapshot.key
@@ -180,28 +211,28 @@ export default class LinksScreen extends React.Component {
   }
 
   render() {
+    console.log(this.state.dataSource);
+    
     return (
       <View style={styles.container}>
         <HeaderButton navigation={this.props.navigation} />
         <ScrollView style={styles.container}>
-          <TouchableOpacity onPress={() => { this.setDB() }}>
-            <Text>TOUCH-1</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => { this.addDB() }}>
-            <Text>TOUCH-2</Text>
-          </TouchableOpacity>
-          {/* <Image source={require("../assets/images/level1.png")}/> */}
           <FlatList
             data={this.state.dataSource}
-            renderItem={({item}) => {
-              var level1 = require('../assets/images/level1.png');             
-              return (<Image source={level1}/>)
+            renderItem={({ item }) => {
+              var a = item.name.icon;
+              var imgSource = imagesRequire.find(n => n.key === item.name.icon).value;
+              return (
+                <View style={{ display: "flex", flexDirection: "row", alignItems:'center', borderBottomColor: 'pink', borderBottomWidth: 1, borderStyle: 'solid'}}>
+                  <Image source={imgSource} style={{ width: 100, height: 100 }} />
+                  <Text>
+                    {item.name.title}
+                  </Text>
+                </View>
+              )
             }}
             keyExtractor={(value) => value.key}
           />
-
-          {this.state.urlIMG ? <Image source={this.state.urlIMG}/> : <Text>No img</Text>}
         </ScrollView>
       </View>
     );
