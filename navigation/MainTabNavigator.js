@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import Test from '../screens/Test';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -18,6 +19,14 @@ const HomeStack = createStackNavigator(
   },
   config
 );
+
+const TestStack = createStackNavigator(
+  {
+    Test: Test,
+  },
+  config
+);
+TestStack.path = ''
 
 HomeStack.navigationOptions = {
   drawerLabel: 'Trang Chủ',
@@ -36,8 +45,9 @@ HomeStack.navigationOptions = {
 HomeStack.path = '';
 
 const LinksStack = createStackNavigator(
-  {
+  { 
     Links: LinksScreen,
+    Test: Test,
   },
   config
 );
@@ -74,10 +84,12 @@ const CustomDrawerContentComponent = props => (
   </View>
 );
 
+
+
 const tabNavigator = createDrawerNavigator({
   HomeStack,
   LinksStack,
-  SettingsStack,
+  SettingsStack
 },{
   contentComponent: CustomDrawerContentComponent,
   contentOptions: {

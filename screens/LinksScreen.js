@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } fr
 import HeaderButton from '../components/HeaderButton';
 import { firebaseApp } from '../components/firebaseConfig.js';
 import { FlatList } from 'react-native-gesture-handler';
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 
 const imagesRequire = [
     {
@@ -34,6 +34,7 @@ export default class LinksScreen extends React.Component {
     componentDidMount() {
         this.addDB();
         // this.testDb();
+        // this.props.navigation.navigate('Test');
     }
 
     testDb() {
@@ -222,16 +223,22 @@ export default class LinksScreen extends React.Component {
                             var imgSource = imagesRequire.find(n => n.key === item.name.icon).value;
                             return (
                                 <View style={styles.levelItem}>
-                                    <View style={{flex: 1, justifyContent: 'center', flexDirection: 'row', borderRightColor: 'rgba(204,204,204,0.3)', borderRightWidth: 1}}><Image source={imgSource} style={{ width: 70, height: 70}} /></View>
-                                    <View style={{flex: 2, justifyContent: 'center', alignItems: 'center'}}>
-                                        <Text>
-                                            {item.name.title}
-                                        </Text>
-                                        <Text>
-                                            By: fanNhan@gmail.com
-                                        </Text>
-                                        <View style={{flexDirection: 'row',justifyContent:'space-around', width: '100%'}}>
-                                            <TouchableOpacity style={styles.buttons}><Text style={styles.txtButton}>Tạo Phòng</Text></TouchableOpacity>
+                                    <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row', borderRightColor: 'rgba(204,204,204,0.3)', borderRightWidth: 1 }}><Image source={imgSource} style={{ width: 70, height: 70 }} /></View>
+                                    <View style={{flex: 5, justifyContent: 'space-between', alignItems: 'center', maxHeight: 70, height: 70 }}>
+                                        <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', overflow: 'hidden' }}>
+                                            <AntDesign name="home" size={20} color="green" />
+                                            <Text style={{ paddingLeft: 8}}>
+                                                {item.name.title}
+                                            </Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', overflow: 'hidden',paddingLeft: 1 }}>
+                                            <Entypo name="email" size={15} color="green"/>
+                                            <Text style={{ paddingLeft: 8}}>
+                                                By: fanNhan@gmail.com
+                                            </Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+                                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Test', { "test": item.name.title }) }} style={styles.buttons}><Text style={styles.txtButton}>Tạo Phòng</Text></TouchableOpacity>
                                             <TouchableOpacity style={styles.buttons}><Text style={styles.txtButton}>Vào Phòng</Text></TouchableOpacity>
                                         </View>
                                     </View>
@@ -248,6 +255,7 @@ export default class LinksScreen extends React.Component {
 
 LinksScreen.navigationOptions = {
     header: null,
+    headerBackTitle: 'HELLOHELLo'
 };
 
 const styles = StyleSheet.create({
@@ -257,7 +265,7 @@ const styles = StyleSheet.create({
     },
     levelItem: {
         flex: 1,
-        margin: 16,
+        margin: 10,
         height: 100,
         borderRadius: 25,
         backgroundColor: '#fff',
@@ -267,19 +275,20 @@ const styles = StyleSheet.create({
         shadowColor: "#ccc",
         shadowOffset: { width: 0, height: 0 },
         flexDirection: 'row',
-        alignItems: "center"
+        alignItems: "center",
+        overflow: 'hidden'
     },
-    buttons:{
-        height: 15,
+    buttons: {
         backgroundColor: '#1eb6fe',
         borderRadius: 10,
-        padding: 15,
+        paddingHorizontal: 15,
         justifyContent: 'center',
-        alignItems: "center"
+        alignItems: "center",
+        maxHeight: 20
     },
-    txtButton:{
+    txtButton: {
         color: '#fff',
-        fontSize: 14,
+        fontSize: 12,
         textTransform: "uppercase",
     }
 });
