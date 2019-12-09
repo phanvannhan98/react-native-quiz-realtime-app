@@ -79,7 +79,12 @@ const tabNavigator = createDrawerNavigator({
   LinksStack,
   SettingsStack,
 },{
-  contentComponent: CustomDrawerContentComponent
+  contentComponent: CustomDrawerContentComponent,
+  contentOptions: {
+    labelStyle: {
+      fontSize: 13
+    }
+  }
 });
 
 tabNavigator.path = '';

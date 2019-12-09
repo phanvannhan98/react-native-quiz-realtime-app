@@ -15,23 +15,23 @@ import { firebaseApp } from '../components/firebaseConfig.js';
 import { FlatList } from 'react-native-gesture-handler';
 
 export default class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.testref = firebaseApp.database().ref("test");
-    this.state = {
-      data: []
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.testref = firebaseApp.database().ref("test");
+  //   this.state = {
+  //     data: []
+  //   }
+  // }
   
-  componentDidMount(){
-    var items = [];
-    this.testref.on('child_added',(data)=>{
-      items.push({key: data.key, value: data.val()});
-      this.setState({
-        data: items
-      })
-    })
-  }
+  // componentDidMount(){
+  //   var items = [];
+  //   this.testref.on('child_added',(data)=>{
+  //     items.push({key: data.key, value: data.val()});
+  //     this.setState({
+  //       data: items
+  //     })
+  //   })
+  // }
 
   render(){
     return (
@@ -73,17 +73,6 @@ export default class HomeScreen extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{backgroundColor: 'pink', flex: 1, justifyContent: 'center'}}>
-            <FlatList
-              data={this.state.data}
-              renderItem={({item,index})=>{return (
-                <View>
-                  <Text key={index}>{item.value}</Text>
-                </View>
-              )}}
-              keyExtractor={(item)=>item.key}
-            />
-          </View>
         </ScrollView>
   
         <View style={styles.tabBarInfoContainer}>
@@ -105,7 +94,6 @@ export default class HomeScreen extends React.Component {
 
 HomeScreen.navigationOptions = {
   header: null,
-
 };
 
 function DevelopmentModeNotice() {
