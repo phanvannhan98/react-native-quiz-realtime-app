@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, TextInput, TouchableOpacity, Alert, Image, StyleSheet, Dimensions } from 'react-native'
 import {firebaseApp} from './../components/firebaseConfig'
-
+import User from './../User'
 
 export default class Login extends Component {
     constructor(props) {
@@ -14,9 +14,8 @@ export default class Login extends Component {
     DangNhap = ()=>{
         firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.pass)
         .then((res)=>{
-            console.log('====================================');
-            console.log(res,'..............................................');
-            console.log('====================================');
+            User.id = res.user.uid;
+            User.email = this.state.email;
             this.props.setIsLogin(true);
             this.props.setEmail(this.state.email);
         })
@@ -30,6 +29,7 @@ export default class Login extends Component {
                 {cancelable: false},
               );
         });
+        
     }
     
     render() {

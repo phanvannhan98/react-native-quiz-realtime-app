@@ -17,38 +17,9 @@ import Playquiz from "./../components/Quiz/Playquiz";
 import SubjectTypeScreen from './home/subjectTypeScreen';
 import SubjectSubScreen from './home/subjectSubScreen';
 import QuizTestScreen from './home/quizTestScreen';
+import User from "./../User";
 
 export default class HomeScreen extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.testref = firebaseApp.database().ref("test");
-  //   this.state = {
-  //     data: []
-  //   }
-  // }
-
-  // componentDidMount(){
-  //   var items = [];
-  //   this.testref.on('child_added',(data)=>{
-  //     items.push({key: data.key, value: data.val()});
-  //     this.setState({
-  //       data: items
-  //     })
-  //   })
-  // }  
-//  nhap {
-//   var testref = firebaseApp.database().ref("test");
-//   console.log(testref);
-//   testref.once('value', function(snapshot) {
-//     snapshot.forEach(function(childSnapshot) {
-//       var childKey = childSnapshot.key;
-//       var childData = childSnapshot.val();
-//       // ...
-//       console.log(childKey, childData);
-      
-//     });
-//   });
-//  }
 
   constructor(props) {
     super(props);
@@ -79,6 +50,8 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
+    console.log(User.id,'............................');
+    
     if (this.state.screen == 'subjectType')
       return (
         <View style={styles.container}>

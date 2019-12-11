@@ -12,7 +12,7 @@ export default class Register extends Component {
     }
     DangKy = ()=>{
         firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass)
-        .then(()=>{
+        .then((res)=>{
             Alert.alert(
                 'Đăng ký thành công',
                 'Chào mừng bạn ^^ '+this.state.email,
