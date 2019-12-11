@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View, Text, Image, Alert } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, Text, Image, Alert, Modal, ActivityIndicator, TextInput } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import { firebaseApp } from '../components/firebaseConfig.js';
 import { FlatList } from 'react-native-gesture-handler';
@@ -27,14 +27,22 @@ export default class LinksScreen extends React.Component {
         this.levelRef = firebaseApp.database().ref("subjectLevel");
         this.testRef = firebaseApp.database().ref("test");
         this.state = {
-            dataSource: []
+            dataSource: [],
+            modal: false,
+            isLoadDing: true,
+            pin: 0,
+            idLevel: null
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.addDB();
-        // this.testDb();
-        // this.props.navigation.navigate('Test');
+    }
+
+    componentWillUnmount(){
+        this.levelRef.remove();
+        this.testRef.remove();
+        this.itemRef.remove();
     }
 
     testDb() {
@@ -205,16 +213,52 @@ export default class LinksScreen extends React.Component {
             });
 
             this.setState({
-                dataSource: items
+                dataSource: items,
+                isLoadDing: false
             })
         })
     }
 
-    render() {
+    vaoPhongHandle = () => {
+        
+        this.setState({modal: false});
 
+        this.refRoom = firebaseApp.database().ref("room").child();
+        this.refUsers = firebaseApp.database().ref("users");
+        this.state = {
+            roomInfo: null,
+            users: []
+        }
+    }
+
+    render() {
+        var {pin} = this.state;
         return (
             <View style={styles.container}>
                 <HeaderButton navigation={this.props.navigation} />
+                <Modal
+                    transparent={true}
+                    visible={this.state.modal}
+                    animationType={'fade'}
+                >
+                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(204,204,204,0.25)' }}>
+                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", maxHeight: 100, width: 300, backgroundColor: '#1eb6fe' }}>
+                            <TextInput value={pin.toString()} onChangeText={text => this.setState({pin: text})} keyboardType='number-pad' placeholder='PIN' placeholderColor='#ccc' style={{textAlign: "center",borderBottomColor: 'pink',borderBottomWidth: 1, width: 80}}/>
+                            <TouchableOpacity style={{paddingVertical: 8}} onPress={() => this.setState({ modal: false })}><Text>Click Me</Text></TouchableOpacity>
+                        </View>
+                    </View>
+                    
+                </Modal>
+                <Modal
+                    transparent={true}
+                    visible={this.state.isLoadDing}
+                    animationType={'slide'}
+                >
+                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(204,204,204,0.25)' }}>
+                        <ActivityIndicator size="large" color="#1eb6fe" />
+                    </View>
+
+                </Modal>
                 <ScrollView style={styles.container}>
                     <FlatList
                         data={this.state.dataSource}
@@ -224,22 +268,22 @@ export default class LinksScreen extends React.Component {
                             return (
                                 <View style={styles.levelItem}>
                                     <View style={{ flex: 2, justifyContent: 'center', flexDirection: 'row', borderRightColor: 'rgba(204,204,204,0.3)', borderRightWidth: 1 }}><Image source={imgSource} style={{ width: 70, height: 70 }} /></View>
-                                    <View style={{flex: 5, justifyContent: 'space-between', alignItems: 'center', maxHeight: 70, height: 70 }}>
+                                    <View style={{ flex: 5, justifyContent: 'space-between', alignItems: 'center', maxHeight: 70, height: 70 }}>
                                         <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', overflow: 'hidden' }}>
                                             <AntDesign name="home" size={20} color="green" />
-                                            <Text style={{ paddingLeft: 8}}>
+                                            <Text style={{ paddingLeft: 8 }}>
                                                 {item.name.title}
                                             </Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', overflow: 'hidden',paddingLeft: 1 }}>
-                                            <Entypo name="email" size={15} color="green"/>
-                                            <Text style={{ paddingLeft: 8}}>
+                                        <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', overflow: 'hidden', paddingLeft: 1 }}>
+                                            <Entypo name="email" size={15} color="green" />
+                                            <Text style={{ paddingLeft: 8 }}>
                                                 By: fanNhan@gmail.com
                                             </Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
-                                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Test', { "test": item.name.title }) }} style={styles.buttons}><Text style={styles.txtButton}>Tạo Phòng</Text></TouchableOpacity>
-                                            <TouchableOpacity style={styles.buttons}><Text style={styles.txtButton}>Vào Phòng</Text></TouchableOpacity>
+                                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('Test', item.name) }} style={styles.buttons}><Text style={styles.txtButton}>Tạo Phòng</Text></TouchableOpacity>
+                                            <TouchableOpacity onPress={() => this.vaoPhongHandle()} style={styles.buttons}><Text style={styles.txtButton}>Vào Phòng</Text></TouchableOpacity>
                                         </View>
                                     </View>
                                 </View>

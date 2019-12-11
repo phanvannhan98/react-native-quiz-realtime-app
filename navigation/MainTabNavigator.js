@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Test from '../screens/Test';
+import VaoPhong from '../screens/VaoPhong';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -19,14 +20,6 @@ const HomeStack = createStackNavigator(
   },
   config
 );
-
-const TestStack = createStackNavigator(
-  {
-    Test: Test,
-  },
-  config
-);
-TestStack.path = ''
 
 HomeStack.navigationOptions = {
   drawerLabel: 'Trang Chủ',
@@ -48,6 +41,7 @@ const LinksStack = createStackNavigator(
   { 
     Links: LinksScreen,
     Test: Test,
+    VaoPhong: VaoPhong
   },
   config
 );

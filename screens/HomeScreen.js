@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { MonoText } from '../components/StyledText';
 import HeaderButton from '../components/HeaderButton';
-import { firebaseApp } from '../components/firebaseConfig.js';
+
 import { FlatList } from 'react-native-gesture-handler';
 
 export default class HomeScreen extends React.Component {
