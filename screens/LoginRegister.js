@@ -21,14 +21,14 @@ export default class LoginRegister extends Component {
     render() {
         if (this.state.form ==='login'){
             return (
-                <View>
-                    <Login goRegister={this.goRegister} setIsLogin = {this.props.setIsLogin}/>
+                <View style={{flex: 1}}>
+                    <Login setEmail = {this.props.setEmail} goRegister={this.goRegister} setIsLogin = {this.props.setIsLogin}/>
                 </View>
             )
         }
         else {
             return (
-                <View>
+                <View style= {{flex: 1}}>
                     <Register goLogin= {this.goLogin}/>
                 </View>
             )

@@ -19,6 +19,7 @@ console.warn = message => {
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [email, setEmail] = useState('');
   
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -31,7 +32,11 @@ export default function App(props) {
   } else {
     if (isLogin === false)
       return (
-        <LoginRegister setIsLogin = {setIsLogin} />
+        <LoginRegister setEmail = {setEmail} setIsLogin = {setIsLogin} />
+        // <View style={styles.container}>
+        //   {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        //   <AppNavigator />
+        // </View>
         
       )
     else

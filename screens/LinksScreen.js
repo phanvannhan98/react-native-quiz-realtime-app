@@ -249,6 +249,7 @@ export default class LinksScreen extends React.Component {
                     />
                 </ScrollView>
             </View>
+            
         );
     }
 }
