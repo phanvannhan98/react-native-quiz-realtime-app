@@ -11,27 +11,29 @@ import {
 } from 'react-native';
 import { MonoText } from '../components/StyledText';
 import HeaderButton from '../components/HeaderButton';
-
+import { firebaseApp } from '../components/firebaseConfig.js';
 import { FlatList } from 'react-native-gesture-handler';
 
 export default class HomeScreen extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.testref = firebaseApp.database().ref("test");
-  //   this.state = {
-  //     data: []
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    this.testref = firebaseApp.database().ref("test");
+    this.state = {
+      data: []
+    }
+  }
   
-  // componentDidMount(){
-  //   var items = [];
-  //   this.testref.on('child_added',(data)=>{
-  //     items.push({key: data.key, value: data.val()});
-  //     this.setState({
-  //       data: items
-  //     })
-  //   })
-  // }
+  componentDidMount(){
+    var items = [];
+    this.testref.on('value',(data)=>{
+      items.push({key: data.key, value: data.val()});
+      this.setState({
+        data: items
+      })
+      console.log(data);
+      
+    })
+  }
 
   render(){
     return (
