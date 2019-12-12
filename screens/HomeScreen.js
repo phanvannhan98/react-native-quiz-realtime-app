@@ -28,6 +28,7 @@ export default class HomeScreen extends React.Component {
       subjectType : '',
       subjectSub : '',
       quizTest : '',
+      subjectSubFull: {}
     }
   }
 
@@ -40,12 +41,13 @@ export default class HomeScreen extends React.Component {
     })
   }
 
-  setSubjectSubId = (id) => {
+  setSubjectSubId = (id,ssf) => {
     this.setState({
-      subjectSub:id
+      subjectSub:id,
+      screen : 'quizTest'
     })
     this.setState({
-      screen : 'quizTest'
+      subjectSubFull : ssf
     })
   }
 
@@ -60,13 +62,13 @@ export default class HomeScreen extends React.Component {
     else if (this.state.screen == 'subjectSub')
       return (
         <View style={styles.container} >
-          <SubjectSubScreen  idSubjectType = {this.state.subjectType} setSubjectSubId = {this.setSubjectSubId}/>
+          <SubjectSubScreen  idSubjectType = {this.state.subjectType} goBack = {()=>{this.setState({screen:'subjectType'})}} setSubjectSubId = {this.setSubjectSubId}/>
         </View>
       )
     else (this.state.screen == 'quizTest')
       return (
         <View style={styles.container}>
-          <QuizTestScreen goBack = {()=>{this.setState({screen:'subjectSub'})}}/>
+          <QuizTestScreen ssf = {this.state.subjectSubFull} goBack = {()=>{this.setState({screen:'subjectSub'})}}/>
         </View>
       )
   }

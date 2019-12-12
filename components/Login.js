@@ -34,11 +34,9 @@ export default class Login extends Component {
     
     render() {
         var {height, width} = Dimensions.get('window');
-        console.log('====================================');
-        console.log(height + "   " + width);
-        console.log('====================================');
+   
         return (
-            <View style={{paddingTop:50,backgroundColor:'rgba(222,222,222,0.3)'}}>
+            <View style={{paddingTop:50,backgroundColor:'rgba(222,222,222,0.3)',flex: 1}}>
                 <View style={{height:300,alignItems: 'center'}}>
                     <Image style={{width:100,height:100}} source={require('../assets/images/logo.jpg')}/>
                 </View>
@@ -72,12 +70,6 @@ export default class Login extends Component {
                     </TouchableOpacity>
                 </View>
             </View>
-            // <View style={{flex: 1,width:width,height:height,backgroundColor:'red'}}>
-            //     <View style={{flex: 1,height:50,width:50, backgroundColor: 'powderblue'}} />
-            //     <View style={{flex: 2, backgroundColor: 'skyblue'}} />
-            //     <View style={{flex: 3, backgroundColor: 'steelblue'}} />
-            //     <Text>abc</Text>
-            // </View>
         )
     }
 }

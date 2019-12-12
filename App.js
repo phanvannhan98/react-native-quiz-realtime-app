@@ -8,6 +8,7 @@ import AppNavigator from './navigation/AppNavigator';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
 import LoginRegister from './screens/LoginRegister';
+import User from './User'
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -30,7 +31,7 @@ export default function App(props) {
       />
     );
   } else {
-    if (isLogin === false)
+    if (isLogin === false && User.id == '')
       return (
         <LoginRegister setEmail = {setEmail} setIsLogin = {setIsLogin} />
         // <View style={styles.container}>

@@ -5,7 +5,7 @@ import Playquiz from '../../components/Quiz/Playquiz'
 export default class QuizTestScreen extends Component {
     render() {
         return (
-                <Playquiz goBack = {this.props.goBack}/>
+            <Playquiz ssf = {this.props.ssf} goBack = {this.props.goBack}/>
         )
     }
 }

@@ -68,7 +68,7 @@ export default class Playquiz extends Component {
              { this._scoreMessage(this.state.score) }
            </View>
 
-       </View> :  <Quiz quizFinish={(score) => this._quizFinish(score)} /> }
+       </View> :  <Quiz ssf= {this.props.ssf} quizFinish={(score) => this._quizFinish(score)} /> }
 
       </View>
     );

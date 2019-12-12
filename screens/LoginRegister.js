@@ -19,6 +19,7 @@ export default class LoginRegister extends Component {
     }
     
     render() {
+
         if (this.state.form ==='login'){
             return (
                 <View style={{flex: 1}}>
