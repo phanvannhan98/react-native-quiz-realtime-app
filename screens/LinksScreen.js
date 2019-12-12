@@ -38,6 +38,7 @@ export default class LinksScreen extends React.Component {
     }
 
     componentDidMount() {
+        
         this.addDB();
         this.refRoomAll = firebaseApp.database().ref("room");
         let items = [];
@@ -107,12 +108,11 @@ export default class LinksScreen extends React.Component {
         var { rooms } = this.state;
         this.refRoom = firebaseApp.database().ref("room").child(item.id);
         rooms = rooms.filter(n=>n.idSubject == item.id);
-        console.log(rooms.length === 0);
         
         if(rooms.length === 0){
             this.refRoom.push({
                 idChuPhong: User.id,
-                pin: '00' + User.id + item.id
+                pin: '000' + item.id
             })
             this.props.navigation.navigate('Test', item)
         }else{
@@ -121,7 +121,6 @@ export default class LinksScreen extends React.Component {
                 return;
             }
             this.refRoom.on('child_added', (data) => {
-                console.log('zozo');
                 kt = true;
                 if (data.val().listUser && data.val().listUser.find(n => n === User.id)) {
                     this.props.navigation.navigate('Test', item);
@@ -135,7 +134,6 @@ export default class LinksScreen extends React.Component {
 
     render() {
         var { pin, rooms } = this.state;
-        console.log(rooms);
         
         return (
             <View style={styles.container}>

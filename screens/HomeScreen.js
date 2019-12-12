@@ -50,7 +50,6 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    console.log(User.id,'............................');
     
     if (this.state.screen == 'subjectType')
       return (

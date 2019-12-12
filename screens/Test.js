@@ -11,7 +11,9 @@ export default class Test extends Component {
         this.refUsers = firebaseApp.database().ref("users");
         this.state = {
             roomInfo: null,
-            users: []
+            users: [],
+            isStart: false,
+            roomKey: ''
         }
     }
 
@@ -21,7 +23,7 @@ export default class Test extends Component {
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         return;
     }
 
@@ -33,6 +35,8 @@ export default class Test extends Component {
 
         this.refRoom.on('child_added', (data) => {
             key = data.key;
+            this.setState({ roomKey: key })
+
             items.push({
                 roomInfo: data.val(),
                 key: data.key
@@ -43,7 +47,6 @@ export default class Test extends Component {
                 this.setState({
                     roomInfo: { ...data.val(), key: data.key }
                 })
-
             }
         })
 
@@ -51,6 +54,7 @@ export default class Test extends Component {
             this.setState({
                 roomInfo: { ...roomtemp, listUser: rs.val() }
             })
+            roomtemp = { ...roomtemp, listUser: rs.val() };
         })
 
         let items2 = [];
@@ -64,24 +68,32 @@ export default class Test extends Component {
                 users: items2
             })
         })
+
+        this.refRoom.child(key).child("status").on('value', res => {
+
+            if (res.val() === 'dangthi') {
+                this.setState({isStart: true})
+                if(roomtemp){
+                    this.props.navigation.navigate("TestClient",{roomInfo: roomtemp, idLevel: this.props.navigation.getParam('id')});
+                }
+            }
+        })
     }
 
     onStart = () => {
-        console.log(this.state.roomInfo);
-        var {roomInfo} = this.state;
-        if(roomInfo && roomInfo.listUser && roomInfo.listUser.length)
-        {
-            console.log('COME ON');
-        }else{
+        var { roomInfo, roomKey } = this.state;
+        if (roomInfo && roomInfo.listUser && roomInfo.listUser.length) {
+            this.refRoom.child(roomKey).child("status").set("dangthi");
+        } else {
             Alert.alert("Thông báo !", 'Phòng hiện chưa có ai tham gia');
         }
     }
 
     render() {
-        let { roomInfo, users } = this.state;
+        let { roomInfo, users, isStart, roomKey } = this.state;
         let listUserInRoom = [];
-        // console.log(roomInfo);
-
+        console.log(roomInfo);
+        
         if (users.length, roomInfo) {
             listUserInRoom = users.filter((item, index) => {
                 return roomInfo.listUser ? roomInfo.listUser.find(n => n === item.user.id) : false
@@ -105,6 +117,7 @@ export default class Test extends Component {
                         </TouchableOpacity>
                         :
                         <></>}
+                       
                 </View>
             )
         }

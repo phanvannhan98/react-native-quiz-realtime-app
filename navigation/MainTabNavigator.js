@@ -8,6 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Test from '../screens/Test';
 import VaoPhong from '../screens/VaoPhong';
+import TestClient from '../screens/TestClient';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -41,7 +42,8 @@ const LinksStack = createStackNavigator(
   { 
     Links: LinksScreen,
     Test: Test,
-    VaoPhong: VaoPhong
+    VaoPhong: VaoPhong,
+    TestClient: TestClient
   },
   config
 );

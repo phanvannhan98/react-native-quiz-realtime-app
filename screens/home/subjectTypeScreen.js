@@ -4,7 +4,6 @@ import { firebaseApp } from './../../components/firebaseConfig';
 import HeaderButton from '../../components/HeaderButton';
 
 
-
 export default class SubjectTypeScreen extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +18,6 @@ export default class SubjectTypeScreen extends Component {
     getSubjectType = ()=>{
         var dbSubjectType = firebaseApp.database().ref("subjectType");
         dbSubjectType.once('value', (snapshot)=> {
-          console.log(snapshot);
           
           var lsSubjectType = [];
           snapshot.forEach(function(childSnapshot) {
