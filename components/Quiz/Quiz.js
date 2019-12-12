@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Animbutton from './Animbutton'
+import User from './../../User'
 
 import { firebaseApp } from "../firebaseConfig";
 
@@ -76,18 +77,22 @@ export default class Quiz extends Component {
   constructor(props) {
     super(props);
 
-    const jdata = jsonData.quiz.quiz1
+    const jdata = this.props.ssf.questions  //jsonData.quiz.quiz1
+    console.log(this.props.ssf,'ssfffffffffffffffffffffffff');
+    console.log(jdata,'..................jdata');
+    
+    
     listQuestion = Object.keys(jdata).map(function (k) { return {...jdata[k],id:k,select:-1} });
     
     this.state = {
       questions : listQuestion,
       currentIndex : 0
     }
-
   }
 
-  writeHistoryTest( email, data) {
-    firebaseApp.database().ref('historyTest/' + email).push(
+
+  writeHistoryTest( data) {
+    firebaseApp.database().ref('historyTest/' + User.id).push(
       data
     );
   }
@@ -107,14 +112,14 @@ export default class Quiz extends Component {
       })
       let hoanthanh = Math.round(dem * 100 / length);
       this.props.quizFinish(hoanthanh);
-      this.writeHistoryTest('ltk1909@gmailcom',{...this.state.questions, complete : hoanthanh});
+      this.writeHistoryTest({questions : this.state.questions, complete : hoanthanh});
     }
   }
   
 
   render() {
     let temp = this.state.questions[this.state.currentIndex].options;
-    let answers = Object.keys(temp).map(function (k) { return temp[k]});
+    let answers = temp;
     let question = this.state.questions[this.state.currentIndex].question;
 
     const options = answers.map((k,index) =>{

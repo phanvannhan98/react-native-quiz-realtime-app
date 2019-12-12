@@ -10,6 +10,4 @@ export default function SettingsScreen() {
   return <HistoryUser />
 }
 
-SettingsScreen.navigationOptions = {
-  title: 'History Test'
-};
+

@@ -19,7 +19,7 @@ export default class SubjectTypeScreen extends Component {
     getSubjectType = ()=>{
         var dbSubjectType = firebaseApp.database().ref("subjectType");
         dbSubjectType.once('value', (snapshot)=> {
-          console.log(snapshot);
+        //   console.log(snapshot);
           
           var lsSubjectType = [];
           snapshot.forEach(function(childSnapshot) {
@@ -36,8 +36,6 @@ export default class SubjectTypeScreen extends Component {
       }
     
     render() {
-        console.log(this.state.listSubjectType);
-        
         return (
             <View style= {{flex: 1}}>
                 <HeaderButton navigation = {this.props.navigation}/>
@@ -53,15 +51,19 @@ export default class SubjectTypeScreen extends Component {
                                     <Image  style={{width: 50, height: 50}}  source = {{uri: 'https://firebasestorage.googleapis.com/v0/b/quizdanceapp.appspot.com/o/images%2Flevel1.png?alt=media&token=1c5236a8-fe87-4e59-91bb-3bf15b2a7d19'}} />
                                 </View>
                                 <View style={{flex:1}}>
-                                    <Text>{title}</Text>
+                                    <Text style= {{fontSize:20,fontWeight:'bold',paddingBottom:7}}>{title}</Text>
                                     <Text>{desc}</Text>
-
-                                    <TouchableOpacity onPress= {()=>this.props.setSubjectTypeId(id)} style={{ alignSelf: 'flex-end', backgroundColor : 'green', width : 100, height:50 }}>
-                                        <Text style={{textAlign:'center',paddingTop:10}}>
+                                    <TouchableOpacity  
+                                        onPress= {()=>this.props.setSubjectTypeId(id)} 
+                                        style={{ paddingTop:8,marginTop:15,borderRadius:7,alignSelf: 'center', backgroundColor : '#00cec9', width : 100, height:40 }}
+                                    >
+                                        <Text style={{textAlign:'center'}}>
                                             Start
                                         </Text>
                                     </TouchableOpacity>
+                                    
                                 </View>
+                                
                             </View>
                             
 
